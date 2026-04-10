@@ -24,34 +24,57 @@ $nilai_count = $conn->query("SELECT COUNT(*) as total FROM nilai")->fetch_assoc(
 
         <div class="nav">
             <a href="index.php" class="active">Dashboard</a>
-            <a href="?page=siswa">Kelola Siswa</a>
-            <a href="?page=guru">Kelola Guru</a>
-            <a href="?page=nilai">Input Nilai</a>
-            <a href="?page=laporan">Laporan</a>
+            <a href="?page=siswa">👥 Siswa</a>
+            <a href="?page=guru">👨‍🏫 Guru</a>
+            <a href="?page=kelas">🏫 Kelas</a>
+            <a href="?page=mapel">📖 Mapel</a>
+            <a href="?page=nilai">📊 Nilai</a>
+            <a href="?page=guru_kelas">🔗 Guru-Kelas</a>
+            <a href="?page=guru_mapel">🔗 Guru-Mapel</a>
+            <a href="?page=laporan">📈 Laporan</a>
         </div>
 
         <div class="content">
             <?php
             $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             
-            if ($page == 'siswa') {
-                include 'pages/siswa.php';
-            } elseif ($page == 'guru') {
-                include 'pages/guru.php';
-            } elseif ($page == 'nilai') {
-                include 'pages/nilai.php';
-            } elseif ($page == 'laporan') {
-                include 'pages/laporan.php';
-            } else {
-                // Dashboard
-                echo '<h2>Dashboard Utama</h2>';
-                echo '<div class="stats">';
-                echo '<div class="stat-card"><h3>' . $siswa_count . '</h3><p>Total Siswa</p></div>';
-                echo '<div class="stat-card"><h3>' . $guru_count . '</h3><p>Total Guru</p></div>';
-                echo '<div class="stat-card"><h3>' . $mapel_count . '</h3><p>Total Mapel</p></div>';
-                echo '<div class="stat-card"><h3>' . $nilai_count . '</h3><p>Data Nilai</p></div>';
-                echo '</div>';
-                echo '<div class="alert alert-info">Selamat datang di Sistem Manajemen Nilai Sekolah. Gunakan menu navigasi untuk mengelola data.</div>';
+            switch($page) {
+                case 'siswa':
+                    include 'pages/siswa.php';
+                    break;
+                case 'guru':
+                    include 'pages/guru.php';
+                    break;
+                case 'kelas':
+                    include 'pages/kelas.php';
+                    break;
+                case 'mapel':
+                    include 'pages/mapel.php';
+                    break;
+                case 'nilai':
+                    include 'pages/nilai.php';
+                    break;
+                case 'guru_kelas':
+                    include 'pages/guru_kelas.php';
+                    break;
+                case 'guru_mapel':
+                    include 'pages/guru_mapel.php';
+                    break;
+                case 'laporan':
+                    include 'pages/laporan.php';
+                    break;
+                default:
+                    // Dashboard
+                    $kelas_count = $conn->query("SELECT COUNT(*) as total FROM kelas")->fetch_assoc()['total'];
+                    echo '<h2>📊 Dashboard Utama</h2>';
+                    echo '<div class="stats">';
+                    echo '<div class="stat-card"><h3>' . $siswa_count . '</h3><p>Total Siswa</p></div>';
+                    echo '<div class="stat-card"><h3>' . $guru_count . '</h3><p>Total Guru</p></div>';
+                    echo '<div class="stat-card"><h3>' . $kelas_count . '</h3><p>Total Kelas</p></div>';
+                    echo '<div class="stat-card"><h3>' . $mapel_count . '</h3><p>Total Mapel</p></div>';
+                    echo '<div class="stat-card"><h3>' . $nilai_count . '</h3><p>Data Nilai</p></div>';
+                    echo '</div>';
+                    echo '<div class="alert alert-info">✓ Sistem Manajemen Nilai Sekolah siap digunakan. Gunakan menu navigasi untuk mengelola data.</div>';
             }
             ?>
         </div>
